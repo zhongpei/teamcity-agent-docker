@@ -1,12 +1,30 @@
-server:
+teamcity-server:
   image: sjoerdmulder/teamcity
   ports:
     - 8111:8111
   volumes:
-    - /data/teamcity-storage:/var/lib/teamcity
-agent:
+    - /data/teamcity/storage:/var/lib/teamcity
+  links:
+    - postgresql
+  restart: always
+
+teamcity-agent:
   image: sjoerdmulder/teamcity-agent
   links:
-    - server
+    - teamcity-server
   environment:
     TEAMCITY_SERVER: http://server:8111
+  restart: always
+
+
+postgresql:
+  image: postgres:9.3
+  expose:
+      - "5432"
+  environment:
+      - "POSTGRES_PASSWORD=12345678"
+      - "POSTGRES_USER=teamcity"
+      - "POSTGRES_DB=teamcity"
+  volumes:
+      - "/data/teamcity/postgresql:/var/lib/postgresql/data"
+  restart: always
