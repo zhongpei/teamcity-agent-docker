@@ -3,7 +3,7 @@ server:
   ports:
     - 8111:8111
   volumes:
-    - ./teamcity-storage:/var/lib/teamcity
+    - /data/teamcity-storage:/var/lib/teamcity
 agent:
   image: sjoerdmulder/teamcity-agent
   links:
