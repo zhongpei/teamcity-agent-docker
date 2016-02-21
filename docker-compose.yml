@@ -13,7 +13,7 @@ teamcity-agent:
   links:
     - teamcity-server
   environment:
-    TEAMCITY_SERVER: http://server:8111
+    TEAMCITY_SERVER: http://teamcity-server:8111
   restart: always
 
 
